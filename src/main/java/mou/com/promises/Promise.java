@@ -34,7 +34,7 @@ public class Promise<T> {
      * @return root
      */
     public static Promise<?> getRoot(Promise<?> promise) {
-        var root = promise;
+        Promise<?> root = promise;
         while (root.previous != null) {
             root = root.previous;
         }
@@ -48,7 +48,7 @@ public class Promise<T> {
      * @return end
      */
     public static Promise<?> getEnd(Promise<?> promise) {
-        var end = promise;
+        Promise<?> end = promise;
         while (end.next != null) {
             end = end.next;
         }
@@ -68,7 +68,7 @@ public class Promise<T> {
             resolve.run(null);
         });
         if (promises == null || promises.size() == 0) return root;
-        var promise = promises.get(0);
+        Promise<?> promise = promises.get(0);
         for (int i = 1; i < promises.size(); i++) {
             promise = promise.then(promises.get(i));
         }
@@ -108,8 +108,8 @@ public class Promise<T> {
      * @return next promise
      */
     public Promise<?> then(Promise<?> next) {
-        var nextRoot = getRoot(next);
-        var thisEnd = getEnd(this);
+        Promise<?> nextRoot = getRoot(next);
+        Promise<?> thisEnd = getEnd(this);
         thisEnd.next = nextRoot;
         nextRoot.previous = thisEnd;
         return next;
